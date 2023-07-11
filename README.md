@@ -2,15 +2,16 @@
 
 A Generic Graphical User Interface for Robot Control
 
-This work presents a graphical interface developed through the PyQt framework, focused in robots equipped with Robot Operating System (ROS) framework and designed with the ease for starting processes. The interface was validated with real robot experiments.
+This work presents a graphical interface developed through the PyQt framework, focused on robots equipped with Robot Operating System (ROS) framework and designed with ease for starting processes. it integrates the face recognition module used in the authentification access and in the module of speaking to a known person.
 
 
 ## Libraries Used
 
 - [PyQt5](https://www.riverbankcomputing.com/software/pyqt/)
-- [ROS Indigo](https://www.ros.org/)
-- [Paramiko](http://www.paramiko.org/)
+- [ROS melodic](https://www.ros.org/)
 - [OpenCV](https://opencv.org/)
+- [face recognition](https://pypi.org/project/face-recognition/)
+- [pyttsx3](https://pypi.org/project/pyttsx3/)
 
 
 ## User manual
