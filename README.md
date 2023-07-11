@@ -19,9 +19,14 @@ This work presents a graphical interface developed through the PyQt framework, f
 The main folder contains the following scripts:
 
 SparkScreen.py: This script is responsible for running the user interface (UI) of the application.
+##
+
 Salut.py: This script is designed to greet known individuals by saying "Hi."
+##
 Spark.py: This script utilizes multithread technology to simultaneously run both the SparkScreen.py and Salut.py scripts.
-Additionally, there is a file called Settings.py which is associated with the main SparkScreen.py script. This file likely contains configuration settings or variables specific to the functionality of the UI.
+##
+Additionally, there is a file called Settings.py which is associated with the main SparkScreen.py script. This file likely contains configuration settings or variables 
+specific to the functionality of the UI.
 
 For more detailed information on the functionality and usage of each script, please refer to their individual files.
 
