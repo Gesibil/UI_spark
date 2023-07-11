@@ -1,13 +1,13 @@
 # !/usr/bin/env python3
 
 import sys
-# import rospy
+
 
 from os import path
 
-#import vectors
+
 from settings import*
-#from MyViz import*
+
 import subprocess
 import cv2
 from PyQt5.QtWidgets import QMainWindow, QApplication, QSystemTrayIcon, QMenu
@@ -29,29 +29,24 @@ import face_recognition
 import pyttsx3
 
 
-# try:
-#     import face_recognition
-# except Exception:
-#     print("Please install `face_recognition_models` with this command before using `face_recognition`:\n")
-#     print("cannot find face recognition model")
-#     quit()
-
-
 #battery state 
 battery_images = {
-    0: "/home/ubuntu/TurtleUI-master/main/image_logo/discharging_0.png",
-    10: "/home/ubuntu/TurtleUI-master/main/image_logo/discharging_10.png",
-    20: "/home/ubuntu/TurtleUI-master/main/image_logo/discharging_20.png",
-    30: "/home/ubuntu/TurtleUI-master/main/image_logo/discharging_30.png",
-    40: "/home/ubuntu/TurtleUI-master/main/image_logo/discharging_40.png",
-    50: "/home/ubuntu/TurtleUI-master/main/image_logo/discharging_50.png",
-    60: "/home/ubuntu/TurtleUI-master/main/image_logo/discharging_60.png",
-    70: "/home/ubuntu/TurtleUI-master/main/image_logo/discharging_70.png",
-    80: "/home/ubuntu/TurtleUI-master/main/image_logo/discharging_80.png",
-    90: "/home/ubuntu/TurtleUI-master/main/image_logo/discharging_90.png",
-    100: "/home/ubuntu/TurtleUI-master/main/image_logo/discharging_100.png"
+      
+    0: "discharging_0.png",
+    10: "discharging_10.png",
+    20: "discharging_20.png",
+    30: "discharging_30.png",
+    40: "discharging_40.png",
+    50: "discharging_50.png",
+    60: "discharging_60.png",
+    70: "discharging_70.png",
+    80: "discharging_80.png",
+    90: "discharging_90.png",
+    100: "discharging_100.png"
 }
-xmlFile = et.parse('/home/ubuntu/TurtleUI-master/main/environment.xml')
+
+
+xmlFile = et.parse('environment.xml')
 # Find the root element from the file (in this case "environment")
 root = xmlFile.getroot()
 # Load the XML values from environment file
@@ -147,12 +142,17 @@ class Ui_MainWindow(QDialog):
        
         # Add the logo label to the layout
         self.logoLabel = QtWidgets.QLabel(self.centralwidget)
-        self.logoLabel.setPixmap(QtGui.QPixmap("/home/ubuntu/TurtleUI-master/main/image_logo/logo&.png"))
+        self.logoLabel.setPixmap(QtGui.QPixmap("logo&.png"))
         self.logoLabel.setMaximumSize(100, 100)
         self.logoLabel.setGeometry(QtCore.QRect(0, 0, 80, 80)) # Set the geometry of the logo label
         self.logoLabel.setScaledContents(True)
         
-        
+          # Add the logo label to the layout
+        self.logoorange = QtWidgets.QLabel(self.centralwidget)
+        self.logoorange.setPixmap(QtGui.QPixmap("orange.png"))
+        self.logoorange.setMaximumSize(100, 100)
+        self.logoorange.setGeometry(QtCore.QRect(640, 0, 80, 80)) # Set the geometry of the logo label
+        self.logoorange.setScaledContents(True)
         
         #Create gif label and add it to the layout
         self.labelgif = QtWidgets.QLabel(self.centralwidget)
@@ -160,7 +160,7 @@ class Ui_MainWindow(QDialog):
         self.labelgif.setScaledContents(True)
 
         # Loading the GIF
-        self.movie = QMovie("/home/ubuntu/TurtleUI-master/main/image_logo/eyes-.gif")
+        self.movie = QMovie("eyes-.gif")
         self.labelgif.setMovie(self.movie)
         self.startAnimation()
         self.horizontalLayout.addWidget(self.labelgif)
@@ -172,19 +172,19 @@ class Ui_MainWindow(QDialog):
         # self.labelgif1.setGeometry(QtCore.QRect(360, 0, 300, 480))
         # self.labelgif1.setScaledContents(True)
         # # Loading the GIF
-        # self.movie = QMovie("/home/ubuntu/TurtleUI-master/main/image_logo/ai-electricity.gif")
+        # self.movie = QMovie("ai-electricity.gif")
         # self.labelgif.setMovie(self.movie)
         # self.startAnimation()
         # self.horizontalLayout.addWidget(self.labelgif)
         # # Loading the GIF
-        # self.movie = QMovie("/home/ubuntu/TurtleUI-master/main/image_logo/ai-electricity.gif")
+        # self.movie = QMovie("ai-electricity.gif")
         # self.labelgif1.setMovie(self.movie)
         # self.startAnimation()
         # self.horizontalLayout.addWidget(self.labelgif1)
 
         #battery state
         self.batteryState = QtWidgets.QLabel(self.centralwidget)
-        self.batteryState.setGeometry(QtCore.QRect(680, 0, 20, 20))
+        self.batteryState.setGeometry(QtCore.QRect(680, 450, 25, 20))
         pixmap = self.update_battery()
         transform = QtGui.QTransform().rotate(90)
         pixmap = pixmap.transformed(transform, QtCore.Qt.SmoothTransformation)
@@ -195,12 +195,12 @@ class Ui_MainWindow(QDialog):
 
 
         #button to switch screen
-        icon = QtGui.QPixmap("/home/ubuntu/TurtleUI-master/main/image_logo/login-.png")
+        icon = QtGui.QPixmap("login-.png")
         
         self.Screen2button = QPushButton(self.centralwidget)
         icon = icon.scaled(self.Screen2button.width(),self.Screen2button.height(),QtCore.Qt.KeepAspectRatio)
         self.Screen2button.setIcon(QtGui.QIcon(icon))
-        self.Screen2button.setGeometry(QtCore.QRect(620, 0, 120, 120))
+        self.Screen2button.setGeometry(QtCore.QRect(300, 0, 120, 120))
         self.Screen2button.clicked.connect(self.goScreen2)
         self.Screen2button.setToolTip('Authentificate')
         self.Screen2button.setStyleSheet("background: transparent; border: none;")
@@ -208,6 +208,7 @@ class Ui_MainWindow(QDialog):
 
         self.batteryState.raise_()
         self.logoLabel.raise_()
+        self.logoorange.raise_()
         self.Screen2button.raise_()
         # Set the central widget of the MainWindow
         MainWindow.setCentralWidget(self.centralwidget)
@@ -223,31 +224,36 @@ class Ui_MainWindow(QDialog):
         MainWindow.setWindowTitle(_translate("MainWindow", "Spark"))
 
 
-    
-
-
+    # Define a class for recording video
 class RecordVideo(QtCore.QObject):
-        image_data = QtCore.pyqtSignal(np.ndarray)
+    # Signal to emit the captured image data
+    image_data = QtCore.pyqtSignal(np.ndarray)
 
-        def __init__(self, camera_port=0, parent=None):
-                super().__init__(parent)
-                self.camera = cv2.VideoCapture(camera_port)
-                self.timer = QtCore.QBasicTimer()
+    def __init__(self, camera_port=0, parent=None):
+        super().__init__(parent)
+        # Initialize the camera by capturing the video from the specified camera port
+        self.camera = cv2.VideoCapture(camera_port)
+        self.timer = QtCore.QBasicTimer()
 
-        def start_recording(self):
-                self.timer.start(0, self)
-        def stop_recording(self):
-                self.timer.stop()
-                self.camera.release()
+    def start_recording(self):
+        # Start the timer to capture video frames
+        self.timer.start(0, self)
 
-        def timerEvent(self, event):
-                if (event.timerId() != self.timer.timerId()):
-                        return
+    def stop_recording(self):
+        # Stop the timer and release the camera resources
+        self.timer.stop()
+        self.camera.release()
 
-                read, image = self.camera.read()
-                if read:
-                        self.image_data.emit(image)
-                        
+    def timerEvent(self, event):
+        # Check if the timer event is not from this class instance
+        if event.timerId() != self.timer.timerId():
+            return
+
+        # Read a frame from the camera
+        read, image = self.camera.read()
+        if read:
+            # Emit the captured image data using the defined signal
+            self.image_data.emit(image)
 
 
 
@@ -259,30 +265,28 @@ class FaceDetectionWidget(QtWidgets.QWidget):
 
         def __init__(self,  parent=None):
                 super().__init__(parent)
-                self.classifier = cv2.CascadeClassifier('/home/ubuntu/TurtleUI-master/main/haarcascade_frontalface_default.xml')
+                self.classifier = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
                 self.image = QtGui.QImage()
                 self.NameUser='Admin'
                 self.engine = pyttsx3.init()
                 
-        
-          
-        
-               
 
         def detect_faces(self, image: np.ndarray):
                 # haarclassifiers work better in black and white
                 gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-                
+                # Detect faces using the cascade classifier
                 faces = self.classifier.detectMultiScale(gray, 1.3, 5)
                 face_encodings = []
                 
                 name=""
+                # Perform face recognition if face_encodings are available
                 if s:
+                        # Get face locations and encodings using face_recognition library
                         face_locations = face_recognition.face_locations(image)
                         face_encodings = face_recognition.face_encodings(image)
                         #face_names = []
                         for face_encoding in face_encodings:
-
+                                # Perform face matching and retrieve the best match
                                 matches = face_recognition.compare_faces(known_face_encoding,face_encoding)
                                 
                                 face_distance = face_recognition.face_distance(known_face_encoding,face_encoding)
@@ -296,14 +300,19 @@ class FaceDetectionWidget(QtWidgets.QWidget):
                 return faces,name
 
         def image_data_slot(self, image_data):
+                # Display user-specific information when a known face is recognized
+            
                 
+               
+                # Perform face detection on the incoming image data
                 faces,name = self.detect_faces(image_data)
+                 # Draw rectangles around detected faces
                 for (x, y, w, h) in faces:
                         cv2.rectangle(image_data,(x,y),(x+w,y+h),(0,255,0),2)
 
                 if name in known_faces_names:
                                         
-                                        
+                                        # Set up text properties
 
                                         font = cv2.FONT_HERSHEY_SIMPLEX
                                         bottomLeftCornerOfText = (10,100)
@@ -312,28 +321,24 @@ class FaceDetectionWidget(QtWidgets.QWidget):
                                         thickness              = 3
                                         lineType               = 2
                                         self.NameUser=name
-                                        # cv2.putText(image_data,'Welcome '+name, 
-                                        # bottomLeftCornerOfText, 
-                                        # font, 
-                                        # fontScale,
-                                        # fontColor,
-                                        # thickness,
-                                        # lineType) 
+                                        # Update the NameUser variable and speak a welcome message
                                         self.engine.say('Welcome '+name)
+                                        voices = self.engine.getProperty('voices')
+                                        self.engine.setProperty('voice', voices[0].id)
                                         self.engine.runAndWait()
+                                         # Update the central widget of the main window to userpage
+          
                                         MainWindow.setCentralWidget(userpage)
-                                        
-                                        
-
-
-
+                # Convert the modified image to QImage for display        
                 self.image = self.get_qimage(image_data)
+                # Adjust the size of the widget based on the image size
                 if self.image.size() != self.size():
                         self.setFixedSize(self.image.size())
-
+                # Update the widget to trigger paintEvent
                 self.update()
 
         def get_qimage(self, image: np.ndarray):
+                # Convert the image data to QImage
                 height, width, colors = image.shape
                 bytesPerLine = 3 * width
                 QImage = QtGui.QImage
@@ -342,7 +347,7 @@ class FaceDetectionWidget(QtWidgets.QWidget):
 
                 image = image.rgbSwapped()
                 return image
-
+        # Draw the image on the widget
         def paintEvent(self, event):
                 painter = QtGui.QPainter(self)
                 painter.drawImage(0, 0, self.image)
@@ -367,9 +372,9 @@ class Screen3(QtWidgets.QWidget):
             self.title = "Spark"
             self.centralwidget = QtWidgets.QWidget(MainWindow)
             self.centralwidget.setObjectName("centralwidget")
-            #self.centralwidget.setStyleSheet("background: #000000")
             
-            # TODO: set video port
+            
+            # set video port
             self.record_video = RecordVideo(0)
             self.run_button = QtWidgets.QPushButton('Authentificate')
             self.run_button.setStyleSheet("color:#ffffff")
@@ -391,7 +396,7 @@ class Screen3(QtWidgets.QWidget):
 
 
             #button to switch screen
-            icon1 = QtGui.QPixmap("/home/ubuntu/TurtleUI-master/main/image_logo/login.png")
+            icon1 = QtGui.QPixmap("login.png")
             
             self.Screen3button1 = QPushButton(self.centralwidget)
             icon1 = icon1.scaled(self.Screen3button1.width(),self.Screen3button1.height(),QtCore.Qt.KeepAspectRatio)
@@ -420,6 +425,8 @@ class Screen3(QtWidgets.QWidget):
             MainWindow.setCentralWidget(Ui_MainWindow)
             print("pressed")
 
+#Authentification screen
+
 class Screen2(QtWidgets.QWidget):
 
         def __init__(self, parent=None):
@@ -433,7 +440,7 @@ class Screen2(QtWidgets.QWidget):
             MainWindow.setObjectName("MainWindow")
             MainWindow.resize(720, 480)
             MainWindow.setStyleSheet("background-color: #000814;")
-            #MainWindow.setStyleSheet("background-image: url(/home/ubuntu/TurtleUI-master/main/image_logo/image.jpg);")
+          
             self.title = "Spark"
             self.centralwidget = QtWidgets.QWidget(MainWindow)
             self.centralwidget.setObjectName("centralwidget")
@@ -448,13 +455,10 @@ class Screen2(QtWidgets.QWidget):
             hbox.setSpacing(0)
             hbox.setContentsMargins(0, 0, 0, 0)
 
-            
-
-            
 
             # Create a QLabel widget to display the image
             self.image_login = QtWidgets.QLabel(self.centralwidget)
-            pixmap = QtGui.QPixmap('/home/ubuntu/TurtleUI-master/main/image_logo/user.png')
+            pixmap = QtGui.QPixmap('user.png')
             pixmap = pixmap.scaled(200, 100, QtCore.Qt.KeepAspectRatio)
             self.image_login.setPixmap(pixmap)
             self.image_login.setAlignment(QtCore.Qt.AlignCenter)
@@ -471,7 +475,7 @@ class Screen2(QtWidgets.QWidget):
             
             self.button1 = QtWidgets.QPushButton(self.centralwidget)
             self.button1.setGeometry(QtCore.QRect(0, 0,360, 410))
-            icon1 = QtGui.QIcon('/home/ubuntu/TurtleUI-master/main/image_logo/faceid.jpg')
+            icon1 = QtGui.QIcon('faceid.jpg')
             self.button1.setIcon(icon1)
             self.button1.setIconSize(QtCore.QSize(350, 410))
             self.button1.setStyleSheet("background: transparent; border: none;")
@@ -487,7 +491,7 @@ class Screen2(QtWidgets.QWidget):
 
             self.button2 = QtWidgets.QPushButton(self.centralwidget)
             self.button2.setGeometry(QtCore.QRect(360, 0,360, 430))
-            icon2 = QtGui.QIcon('/home/ubuntu/TurtleUI-master/main/image_logo/aut.png')
+            icon2 = QtGui.QIcon('aut.png')
             self.button2.setIcon(icon2)
             self.button2.setIconSize(QtCore.QSize(350, 430))
             self.button2.setStyleSheet("background: transparent; border: none;")
@@ -502,26 +506,6 @@ class Screen2(QtWidgets.QWidget):
             self.centralwidget.setLayout(vbox)
             
 
-            
-
-            
-
-
-            #button to switch screen
-        #     icon1 = QtGui.QPixmap("/home/ubuntu/TurtleUI-master/main/image_logo/faceid_icon.png")
-            
-        #     self.Screen2button1 = QPushButton(self.centralwidget)
-        #     icon1 = icon1.scaled(self.Screen2button1.width(),self.Screen2button1.height(),QtCore.Qt.KeepAspectRatio)
-        #     self.Screen2button1.setIcon(QtGui.QIcon(icon1))
-        #     self.Screen2button1.setGeometry(QtCore.QRect(300, 150, 220, 220))
-        #     self.Screen2button1.clicked.connect(self.goScreen3)
-        #     self.Screen2button1.setToolTip('Authentificate')
-        #     self.Screen2button1.setStyleSheet("background: transparent; border: none;")
-            
-
-            
-            #self.Screen2button1.raise_()
-            #layout.addWidget(self.Screen2button1)
             self.setLayout(vbox)
             # Set the central widget of the MainWindow
             MainWindow.setCentralWidget(self.centralwidget)
@@ -541,7 +525,7 @@ class Screen2(QtWidgets.QWidget):
             MainWindow.setCentralWidget(loginpage)
             print("loginpage")
 
-
+#user name authentification
 
 class login(QtWidgets.QWidget):
     def __init__(self, parent=None):
@@ -550,9 +534,6 @@ class login(QtWidgets.QWidget):
                 self.setupUi(MainWindow)
 
     
-        
-
-
     def setupUi(self, MainWindow):            
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(720, 480)
@@ -564,7 +545,7 @@ class login(QtWidgets.QWidget):
         vbox.setSpacing(0)
         vbox.setContentsMargins(0, 20, 0, 0)
         self.image_login = QtWidgets.QLabel(self.bgwidget)
-        pixmap = QtGui.QPixmap('/home/ubuntu/TurtleUI-master/main/image_logo/user.png')
+        pixmap = QtGui.QPixmap('user.png')
         pixmap = pixmap.scaled(200, 100, QtCore.Qt.KeepAspectRatio)
         self.image_login.setPixmap(pixmap)
         self.image_login.setAlignment(QtCore.Qt.AlignCenter)
@@ -682,7 +663,7 @@ class login(QtWidgets.QWidget):
           
 
 
-
+#admin interface 
 class User(QtWidgets.QWidget):
     def __init__(self,username='admin',password='admin',parent=None):
                 super().__init__(parent)
@@ -772,28 +753,28 @@ class AdminUser(User):
         self.icon4 = QtWidgets.QPushButton(self.bgwidget)
 
         # Set icons for each button
-        icon1_path = '/home/ubuntu/TurtleUI-master/main/image_logo/setting.png'
+        icon1_path = 'setting.png'
         self.icon1.setIcon(QtGui.QIcon(icon1_path))
         self.icon1.setIconSize(QtCore.QSize(50,50))
         self.icon1_label = QtWidgets.QLabel("Settings", self.bgwidget)
         self.grid_layout.addWidget(self.icon1_label, 1, 0)
         self.icon1.clicked.connect(settings)
 
-        icon2_path = '/home/ubuntu/TurtleUI-master/main/image_logo/charging.png'
+        icon2_path = 'charging.png'
         self.icon2.setIcon(QtGui.QIcon(icon2_path))
         self.icon2.setIconSize(QtCore.QSize(50,50))
         self.icon2.clicked.connect(lambda: self.show_battery_chart())
 
-        icon3_path = '/home/ubuntu/TurtleUI-master/main/image_logo/placeholder.png'
+        icon3_path = 'placeholder.png'
         self.icon3.setIcon(QtGui.QIcon(icon3_path))
         self.icon3.setIconSize(QtCore.QSize(50,50))
         self.icon3.clicked.connect(lambda: self.shoose_maps())
 
-        icon4_path = '/home/ubuntu/TurtleUI-master/main/image_logo/conference_.png'
+        icon4_path = 'conference_.png'
         self.icon4.setIcon(QtGui.QIcon(icon4_path))
         self.icon4.setIconSize(QtCore.QSize(50,50))
         self.admin_image=QtWidgets.QLabel(self.bgwidget)
-        pixmap = QtGui.QPixmap('/home/ubuntu/TurtleUI-master/main/image_logo/adminicon.png')
+        pixmap = QtGui.QPixmap('adminicon.png')
         pixmap = pixmap.scaled(200, 100, QtCore.Qt.KeepAspectRatio)
         self.admin_image.setPixmap(pixmap)
         self.admin_image.setAlignment(QtCore.Qt.AlignCenter)
@@ -907,7 +888,7 @@ class Maps(QDialog):
         self.setMinimumSize(QtCore.QSize(600, 400))
         self.FirstFloor = QtWidgets.QPushButton(self)
         self.FirstFloor.setGeometry(QtCore.QRect(180, 50, 50, 50))  # Set the position and size of the button
-        iconfloor_path = '/home/ubuntu/TurtleUI-master/main/image_logo/blueprint.png'
+        iconfloor_path = 'blueprint.png'
         self.FirstFloor.setIcon(QtGui.QIcon(iconfloor_path))
         self.FirstFloor.setIconSize(QtCore.QSize(50, 50))
         floor1="3rdfloor.yaml"
@@ -915,7 +896,7 @@ class Maps(QDialog):
 
         self.SecondFloor = QtWidgets.QPushButton(self)
         self.SecondFloor.setGeometry(QtCore.QRect(180, 230, 50, 50))  # Set the position and size of the button
-        iconfloor_path = '/home/ubuntu/TurtleUI-master/main/image_logo/blueprint.png'
+        iconfloor_path = 'blueprint.png'
         self.SecondFloor.setIcon(QtGui.QIcon(iconfloor_path))
         self.SecondFloor.setIconSize(QtCore.QSize(50, 50))
         floor2="Secondfloor.yaml"
@@ -942,12 +923,12 @@ class Maps(QDialog):
         # Create a label to display the image
         self.image_label = QtWidgets.QLabel(self)
         self.image_label.setGeometry(QtCore.QRect(300, 30, 200, 80))
-        self.image_label.setPixmap(QtGui.QPixmap("/home/ubuntu/TurtleUI-master/main/image_logo/3rdfloor.PNG"))
+        self.image_label.setPixmap(QtGui.QPixmap("3rdfloor.PNG"))
         self.image_label.setScaledContents(True)
 
         self.image_label2 = QtWidgets.QLabel(self)
         self.image_label2.setGeometry(QtCore.QRect(300, 220, 200, 80))
-        self.image_label2.setPixmap(QtGui.QPixmap("/home/ubuntu/TurtleUI-master/main/image_logo/2ndfloor.jpg"))
+        self.image_label2.setPixmap(QtGui.QPixmap("2ndfloor.jpg"))
         self.image_label2.setScaledContents(True)
 
         self.label1.raise_()
@@ -959,7 +940,7 @@ class Maps(QDialog):
         #self.maps.setCentralWidget(self.maps)
     def modify_launch_file(self,floor):
     # Open the launch file
-        launch_file_path = "/home/ubuntu/TurtleUI-master/main/test.launch"
+        launch_file_path = "test.launch"
         with open(launch_file_path, "r") as f:
             launch_file_contents = f.read()
         
